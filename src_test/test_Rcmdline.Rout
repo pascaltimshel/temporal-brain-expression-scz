@@ -1,0 +1,43 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> x <- 1:10
+> # In a script, this will do nothing
+> x
+ [1]  1  2  3  4  5  6  7  8  9 10
+> y <- 2:100
+> y
+ [1]   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+[20]  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39
+[39]  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54  55  56  57  58
+[58]  59  60  61  62  63  64  65  66  67  68  69  70  71  72  73  74  75  76  77
+[77]  78  79  80  81  82  83  84  85  86  87  88  89  90  91  92  93  94  95  96
+[96]  97  98  99 100
+> # Use the print function:
+> print(x)
+ [1]  1  2  3  4  5  6  7  8  9 10
+> # [1]  1  2  3  4  5  6  7  8  9 10
+> 
+> # Simpler output: no row/column numbers, no text wrapping
+> cat(x)
+1 2 3 4 5 6 7 8 9 10> # 1  2  3  4  5  6  7  8  9 10
+> 
+> proc.time()
+   user  system elapsed 
+  0.177   0.024   0.207 

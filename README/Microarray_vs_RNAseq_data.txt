@@ -1,0 +1,21 @@
+################## RNAseq ##################
+Number of columns: 524 (32 samples more than microarray)
+
+[1] "Number of unique donors: 42"
+[1] "Number of unique age: 31"
+[1] "Number of unique structure_acronum: 26"
+
+################## Microarray ##################
+Number of columns: 492
+
+[1] "Number of unique donors: 35"
+[1] "Number of unique age: 27"
+[1] "Number of unique structure_acronum: 26"
+
+
+################## Other stats ##################
+
+
+#marray=59 (unique samples not in rnaseq)
+#rnaseq=91 (unique samples not in marray)
+#diff=91-59=32
