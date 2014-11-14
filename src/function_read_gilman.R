@@ -7,10 +7,12 @@
 ####################### GILMAN LIST ################################
 df.gilman.list <- list()
 ### 
-#df.gilman.list[["cluster1"]] <- read.csv("/Users/pascaltimshel/Dropbox/Pascal-Tune/SCZ/gilman_nn_2012/gilman_nn_2012_cluster1.ens", h=F)
-df.gilman.list[["cluster1a"]] <- read.csv("/Users/pascaltimshel/Dropbox/Pascal-Tune/SCZ/gilman_nn_2012/gilman_nn_2012_cluster1a.ens", h=F)
-df.gilman.list[["cluster1b"]] <- read.csv("/Users/pascaltimshel/Dropbox/Pascal-Tune/SCZ/gilman_nn_2012/gilman_nn_2012_cluster1b.ens", h=F)
-df.gilman.list[["cluster2"]] <- read.csv("/Users/pascaltimshel/Dropbox/Pascal-Tune/SCZ/gilman_nn_2012/gilman_nn_2012_cluster2.ens", h=F)
+#df.gilman.list[["cluster1"]] <- read.csv("../gene_lists/gilman_nn_2012_cluster1.ens", h=F)
+df.gilman.list[["cluster1a"]] <- read.csv("../gene_lists/gilman_nn_2012_cluster1a.ens", h=F)
+df.gilman.list[["cluster1b"]] <- read.csv("../gene_lists/gilman_nn_2012_cluster1b.ens", h=F)
+df.gilman.list[["cluster2"]] <- read.csv("../gene_lists/gilman_nn_2012_cluster2.ens", h=F)
+
+
 
 ### Checking mapping
 lapply(df.gilman.list, function(x) sum(!x[,1] %in% df.expression_matrix.clean$ensembl_gene_id)) # unmapped genes

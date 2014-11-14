@@ -19,9 +19,9 @@ setwd(wd)
 source("function_def_stages.R", echo=TRUE)
 
 #### MICROARRAY
-file.columns <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/columns_metadata.csv"
+file.columns <- "../data/141031/microarray/columns_metadata.csv"
 #### RNAseq
-file.columns <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/rnaseq/columns_metadata.csv"
+file.columns <- "../data/141031/rnaseq/columns_metadata.csv"
 
 ########### READ columns file ###########
 df.columns <- read.csv(file.columns,h=T,row.names=1)

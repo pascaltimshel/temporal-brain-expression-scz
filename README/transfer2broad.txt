@@ -18,6 +18,7 @@ scp /Users/pascaltimshel/p_scz/brainspan/src/schizophrenia_expression325permutat
 scp /Users/pascaltimshel/p_scz/brainspan/src/analyze_null_genes_parallel.R ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/analyze_null_genes_parallel.R
 
 
+###################################### COMMAND - OLD ######################################
 ################## Rscript commands ##################
 
 ptimshel@node1377:/cvar/jhlab/timshel/scz> Rscript analyze_null_genes_parallel_broad.R | tee analyze_null_genes_parallel_broad.Rout
@@ -28,8 +29,17 @@ ptimshel@node1382:/cvar/jhlab/timshel/scz> bsub -o analyze_null_n12_priority.bsu
 	---> 16gb is not enough when running 12 cores
 	---> specifying "No memory" requirements is BAD.
 
+###################################### COMMAND - New ######################################
+### Bsub - marray
+bsub -o generate_null_RData_n4_marray_priority.bsub.out -q priority -n 4 -R 'rusage[mem=20]' Rscript generate_null_RData_parallel_broad.R
+
+### Bsub - rnaseq
+bsub -o generate_null_RData_n4_rnaseq_priority.bsub.out -q priority -n 4 -R 'rusage[mem=30]' Rscript generate_null_RData_parallel_broad.R
 
 
+
+### ISH
+Rscript generate_null_RData_parallel_broad.R | tee generate_null_RData_parallel_broad.Rout
 
 
 

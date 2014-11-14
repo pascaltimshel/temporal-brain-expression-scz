@@ -14,11 +14,11 @@ library(tools) # for file_path_sans_ext
 source("function_def_stages.R", echo=TRUE)
 
 ########### FILES ##############
-file.expression_matrix <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/expression_matrix.csv"
-file.columns <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/columns_metadata.csv"
-file.rows <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/rows_metadata.csv"
+file.expression_matrix <- "../data/141031/microarray/expression_matrix.csv"
+file.columns <- "../data/141031/microarray/columns_metadata.csv"
+file.rows <- "../data/141031/microarray/rows_metadata.csv"
 ### IN src fold
-file.gene_length <- "/Users/pascaltimshel/p_scz/brainspan/data/annotation.gene_length.microarray_expression_df_clean.synced.csv"
+file.gene_length <- "../data/annotation.gene_length.microarray_expression_df_clean.synced.csv"
 
 ########### READ columns file ###########
 df.columns <- read.csv(file.columns,h=T,row.names=1)

@@ -19,9 +19,9 @@ library(tools) # for file_path_sans_ext
 source("function_def_stages.R", echo=TRUE)
 
 ########### FILES ##############
-file.expression_matrix <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/rnaseq/expression_matrix.csv"
-file.columns <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/rnaseq/columns_metadata.csv"
-file.rows <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/rnaseq/rows_metadata.csv"
+file.expression_matrix <- "../data/141031/rnaseq/expression_matrix.csv"
+file.columns <- "../data/141031/rnaseq/columns_metadata.csv"
+file.rows <- "../data/141031/rnaseq/rows_metadata.csv"
 #** No gene length file
 
 

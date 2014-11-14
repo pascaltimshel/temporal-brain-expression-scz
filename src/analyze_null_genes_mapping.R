@@ -28,8 +28,8 @@ df.null.mapping <- ldply(list.par_analysis, "[[", "df.null.mapping")
 
 ######################################## NULL FILES #######################################
 ######### Reading null file
-file.null_genes <- "../Data/schizophrenia_expression325permutations0to999.genes.combined.csv"
-#file.null_genes <- "../Data/schizophrenia_expression325permutations0to999.genes.prioritized.top54.combined.csv" # PATH TO PRIORITIZED genes *** #
+file.null_genes <- "../data/schizophrenia_expression325permutations0to999.genes.combined.csv"
+#file.null_genes <- "../data/schizophrenia_expression325permutations0to999.genes.prioritized.top54.combined.csv" # PATH TO PRIORITIZED genes *** #
 
 df.null_genes <- read.csv(file.null_genes,h=T)
 

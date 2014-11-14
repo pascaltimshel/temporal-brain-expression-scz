@@ -31,16 +31,16 @@ source("function_read_gilman.R", echo=TRUE)
 
 
 ########### Setting prioritization #########
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_prioritization.txt"
-file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_associated.txt"
+#file.gene_prioritization <- "../gene_lists/gene_prioritization.txt"
+file.gene_prioritization <- "../gene_lists/gene_associated.txt"
 ## null - prioritized
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_null_bmi.txt"
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_null_height.txt"
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_null_WHR.txt"
+#file.gene_prioritization <- "../gene_lists/gene_null_bmi.txt"
+#file.gene_prioritization <- "../gene_lists/gene_null_height.txt"
+#file.gene_prioritization <- "../gene_lists/gene_null_WHR.txt"
 ## null - associated
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_null_bmi_associated.txt"
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_null_height_associated.txt"
-#file.gene_prioritization <- "/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/gene_null_WHR_associated.txt"
+#file.gene_prioritization <- "../gene_lists/gene_null_bmi_associated.txt"
+#file.gene_prioritization <- "../gene_lists/gene_null_height_associated.txt"
+#file.gene_prioritization <- "../gene_lists/gene_null_WHR_associated.txt"
 gene_list <- basename(file_path_sans_ext(file.gene_prioritization))
 
 ########### READ prioritization file ###########

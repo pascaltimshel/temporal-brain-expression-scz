@@ -27,7 +27,7 @@ load(file="RData/data_marray_expression.RData") # df.expression_matrix.clean, df
 
 ######################################## NULL FILES #######################################
 ######### Reading null file
-file.null_genes <- "../Data/schizophrenia_expression325permutations0to999.genes.combined.csv"
+file.null_genes <- "../data/schizophrenia_expression325permutations0to999.genes.combined.csv"
 #file.null_genes <- **** INSERT PATH TO PRIORITIZED genes *** #
 df.null_genes <- read.csv(file.null_genes,h=T)
 
