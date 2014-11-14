@@ -31,10 +31,12 @@ ptimshel@node1382:/cvar/jhlab/timshel/scz> bsub -o analyze_null_n12_priority.bsu
 
 ###################################### COMMAND - New ######################################
 ### Bsub - marray
-bsub -o generate_null_RData_n4_marray_priority.bsub.out -q priority -n 4 -R 'rusage[mem=20]' Rscript generate_null_RData_parallel_broad.R
+#bsub -J marray40GB_span1 -o generate_null_RData_n4_marray_priority.bsub.out -q priority -n 4 -R 'rusage[mem=40]' -R 'span[hosts=1]' Rscript generate_null_RData_parallel_broad.R
+bsub -J marray40GB -o generate_null_RData_n4_marray_priority.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
 
 ### Bsub - rnaseq
 bsub -o generate_null_RData_n4_rnaseq_priority.bsub.out -q priority -n 4 -R 'rusage[mem=30]' Rscript generate_null_RData_parallel_broad.R
+bsub -J rnaseq_n2_50GB -o generate_null_RData_n2_50gb_rnaseq_priority.bsub.out -q priority -n 2 -R 'rusage[mem=50]' Rscript generate_null_RData_parallel_broad.R
 
 
 

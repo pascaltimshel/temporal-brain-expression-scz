@@ -23,8 +23,8 @@ load(file="RData/data_marray_expression.RData") # df.expression_matrix.clean, df
 
 
 ########### Setting prioritization #########
-file.gene_prioritization <- "../gene_lists/gene_prioritization.txt"
-#file.gene_prioritization <- "../gene_lists/gene_associated.txt"
+#file.gene_prioritization <- "../gene_lists/gene_prioritization.txt"
+file.gene_prioritization <- "../gene_lists/gene_associated.txt"
 ## null - prioritized
 #file.gene_prioritization <- "../gene_lists/gene_null_bmi.txt"
 #file.gene_prioritization <- "../gene_lists/gene_null_height.txt"
@@ -77,10 +77,13 @@ fit.expr.higher$p.value
 linmod <- function(df) {
   t.test(value~gene_type, data=df, alternative="less") # other < prioritized ("o" comes before "p")
 }
-models <- dlply(df.expression_matrix.clean.melt, .(stage), linmod) # empty factor levels are dropped by default.
-y<-ldply(models, function(x) {x$statistic})
-qplot(stage,-t, geom="line", group=1, data=y) + labs(title="Micro-array", y="-t statistic")
+list.fit.stage <- dlply(df.expression_matrix.clean.melt, .(stage), linmod) # empty factor levels are dropped by default.
+df.fit.stage.obs<-ldply(list.fit.stage, function(x) {data.frame(t_statistic=x$statistic)})
+qplot(stage,-t_statistic, geom="line", group=1, data=df.fit.stage.obs) + labs(title="Micro-array", y="-t statistic")
 
+######## Save data ########
+save(df.fit.stage.obs, file="RData/fit_stage_obs_marray_associated.RData")
+#save(df.fit.stage.obs, file="RData/fit_stage_obs_marray_prioritized.RData")
 
 
 

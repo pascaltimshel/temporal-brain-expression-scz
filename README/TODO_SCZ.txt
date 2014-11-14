@@ -1,0 +1,52 @@
+
+@@@@@@@@@@@@@@@@@@ Main FIGURE @@@@@@@@@@@@@@@@@@
+fix legend
+	--> ??
+plot cluster I and II in main fig
+supplement:
+	plot cluster Ia, Ib, II and (I and II)
+
+
+@@@@@@@@@@@@@@@@@@ Generate null distribution @@@@@@@@@@@@@@@@@@
+- Size: 1000
+
+- Null "associated" genes
+- Null prioritized genes
+	---> cannot really be done with DEPECT
+	--> use top ranked genes
+		--> cut-off should be the same as for SCZ (=363)
+
+Runtime
+	step1: loci file generation --> 10 files per min (HAPMAP)
+	step2: DEPICT:
+
+
+@@@@@@@@@@@@@@@@@@ Statistical test @@@@@@@@@@@@@@@@@@
+
+Goal: Time peak for prioritized genes
+	- p-value
+	- remove confounding
+Solution1:
+	- t-test against null distribution for each time point
+		pros:
+		cons: more complex to describe...
+Solution2:
+	- t-test: against associated for each time point
+Solution3:
+	- linear fit, look at magnitude of effectsize of time (and p-value)
+
+
+
+
+###################################### NEW STUFF ######################################
+
+READ manuscript
+
+1) Finish writing Google docs analysis
+	make plot2) for mapped genes. Run stripped loop or copy from Broad.
+
+
+x) Analyze RNA-seq data
+
+
+
