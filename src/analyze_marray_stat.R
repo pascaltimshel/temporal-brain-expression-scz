@@ -23,8 +23,8 @@ load(file="RData/data_marray_expression.RData") # df.expression_matrix.clean, df
 
 
 ########### Setting prioritization #########
-#file.gene_prioritization <- "../gene_lists/gene_prioritization.txt"
-file.gene_prioritization <- "../gene_lists/gene_associated.txt"
+file.gene_prioritization <- "../gene_lists/gene_prioritization.txt"
+#file.gene_prioritization <- "../gene_lists/gene_associated.txt"
 ## null - prioritized
 #file.gene_prioritization <- "../gene_lists/gene_null_bmi.txt"
 #file.gene_prioritization <- "../gene_lists/gene_null_height.txt"

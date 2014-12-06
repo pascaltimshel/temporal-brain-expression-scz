@@ -18,8 +18,31 @@ setwd(wd)
 ########### SOURCING ###########
 source("function_def_stages.R", echo=TRUE)
 
+######### Adding x-tickmarks for stage
+do_stage_converter <- function (p) {
+  stage_converter <- c("s1"="Embryonic",
+                       "s2a"="Early prenatal",
+                       "s2b"="Early prenatal",
+                       "s3a"="Early mid-prenatal",
+                       "s3b"="Early mid-prenatal",
+                       "s4"="Late mid-prenatal",
+                       "s5"="Late prenatal",
+                       "s6"="Early infancy",
+                       "s7"="Late infancy",
+                       "s8"="Early childhood",
+                       "s9"="Late childhood",
+                       "s10"="Adolescence",
+                       "s11"="Adulthood")
+  p <- p + scale_x_discrete(name="", labels = stage_converter) + theme(axis.text.x = element_text(angle = 35, hjust = 1, size=rel(1.15)))
+  return(p)
+}
+
+
+###############################
+
+
 #### MICROARRAY
-file.columns <- "../data/141031/microarray/columns_metadata.csv"
+#file.columns <- "../data/141031/microarray/columns_metadata.csv"
 #### RNAseq
 file.columns <- "../data/141031/rnaseq/columns_metadata.csv"
 
@@ -48,8 +71,34 @@ p
 df.margin.stage <- data.frame(margin.table(table.contingency, 1))
 df.margin.structure <- data.frame(margin.table(table.contingency, 2))
 
-ggplot(df.margin.stage, aes(x=Var1, y=Freq)) + geom_bar(stat='identity') 
-ggplot(df.margin.structure, aes(x=Var1, y=Freq)) + geom_bar(stat='identity') + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+###### Stage plot
+p <- ggplot(df.margin.stage, aes(x=Var1, y=Freq)) + geom_bar(stat='identity') + labs(x="Stage", y="#Samples")
+p
+p <- do_stage_converter(p)
+p + theme(text = element_text(size=15))
+
+##### "Age" plot | using df.columns
+df.columns.age <- as.data.frame(table(df.columns$age))
+variable_split <- strsplit(as.character(df.columns.age$Var1), " ") # list of list with two elements
+df.columns.age$value <- as.numeric(sapply(variable_split, "[[", 1)) # integer/numeric
+df.columns.age$unit <- sapply(variable_split, "[[", 2) # unit {pcw, mos, yrs}
+str(df.columns.age)
+# sorting data frame
+df.columns.age <- df.columns.age[with(df.columns.age, order(match(unit, c("pcw", "mos", "yrs")), value)), ]
+str(df.columns.age)
+df.columns.age$Var1
+# converting "age"/Var1 to factor and sorting
+df.columns.age$Var1 <- factor(df.columns.age$Var1, levels=df.columns.age$Var1) # OBS: ordered=T
+levels(df.columns.age$Var1)
+str(df.columns.age)
+## PLOT IT
+p <- ggplot(df.columns.age, aes(x=Var1, y=Freq)) + geom_bar(stat='identity') + labs(x="Age", y="#Samples")
+p + theme(axis.text.x = element_text(angle = 35, hjust = 1, size=rel(1.15)))
+
+##### Structure plot
+ggplot(df.margin.structure, aes(x=Var1, y=Freq)) + geom_bar(stat='identity') + theme(axis.text.x = element_text(angle = 35, hjust = 1)) + theme(text = element_text(size=15)) + labs(x="Structure", y="#Samples")
+
+
 
 
 
@@ -78,6 +127,9 @@ df.no.dup.stats <- ddply(df.no.dup, .(.id), summarise,
 #rnaseq=91 (unique samples not in marray)
 #diff=91-59=32
 
+######### Number of donors
+length(unique(df.columns.marray$donor_id)) #---> 35 donors
+length(unique(df.columns.rnaseq$donor_id)) #---> 42 donors
 
 ########## Donor overlap
 length(intersect(df.columns.marray$donor_id, df.columns.rnaseq$donor_id)) # 35. There are 35 unique donor_id in marray

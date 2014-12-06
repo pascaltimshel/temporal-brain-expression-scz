@@ -15,15 +15,19 @@ setwd(wd)
 ### marray
 #load("RData/null_RData_broad_marray_associated_priority.RData") #time_elapsed, list.par_analysis
 ### rnaseq
-load("RData/null_RData_broad_rnaseq_associated_priority.RData") #time_elapsed, list.par_analysis
+#load("RData/null_RData_broad_rnaseq_associated_priority.RData") #time_elapsed, list.par_analysis
 
 ############ ** PRIORITIZED genes ** ##########
-#load("????")
+### marray
+#load("RData/null_RData_broad_marray_prioritized_priority.RData") #time_elapsed, list.par_analysis
+### rnaseq
+load("RData/null_RData_broad_rnaseq_prioritized_priority.RData") #time_elapsed, list.par_analysis
+
 
 ############################# EXTRACT BROAD DATA #################################
 ############### Extracting from list
 list.null.mean.summary <- lapply(list.par_analysis, "[[", "df.null.mean.summary")
-list.null.median.summary <- lapply(list.par_analysis, "[[", "df.null.mean.summary")
+list.null.median.summary <- lapply(list.par_analysis, "[[", "df.null.median.summary")
 list.null.fits <- lapply(list.par_analysis, "[[", "list.null.fits")
 ### Generating data.frames - USING ldply!
 df.null.mapping <- ldply(list.par_analysis, "[[", "df.null.mapping") # the following worked when "scalar variables" were saved in the par.analyze_null_genes list: df.null.mapping <- ldply(list.par_analysis, function(x) {data.frame(x[["n_mapped_genes"]], x[["n_unmapped_genes"]])}) 
@@ -65,11 +69,14 @@ qplot(tmp.null_distribution.t_statistic) + geom_vline(xintercept=c(tmp.obs.t_sta
 ### *** REMEMBER to update the list.null.fit.natal before running the ttest
 
 ### Empirical p-value: NATAL TEST
-tmp.obs.t_statistic <- 18.8815
+tmp.obs.t_statistic <- 16.3155#18.8815
 tmp.null_distribution.t_statistic <- sapply(list.null.fit.natal, function(x) {x$statistic}) # same as sapply(list.null.natal_fits, "[[", c("statistic"))
 sum(tmp.null_distribution.t_statistic > tmp.obs.t_statistic)/length(tmp.null_distribution.t_statistic) # calc empirical p-val, one sided, alternative="greater"
-qplot(tmp.null_distribution.t_statistic) + geom_vline(xintercept=c(tmp.obs.t_statistic), linetype="dotted", size=2) + coord_cartesian(ylim=c(0, 125))
-
+q<-qplot(tmp.null_distribution.t_statistic) + geom_vline(xintercept=c(tmp.obs.t_statistic), linetype="dotted", size=2) + coord_cartesian(ylim=c(0, 125))
+q
+q <- q + labs(title="Empirical distribution", y="Number of tests", x="t-statistic")
+q
+#empirical_distribution_rnaseq_prioritized_genes_prenatal-vs-postnatal-10x6
 
 ### Empirical p-value: HIGHER EXPRESSION
 tmp.obs.t_statistic <- -142.2306

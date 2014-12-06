@@ -122,13 +122,13 @@ p
 #p <- p + geom_errorbar(data=df.gilman.summary.cluster.sem, aes(x=stage, group=cluster, ymax=mean1+sd1, ymin=mean1-sd1),color='#2b83ba', width=0.2)
 #p
 ### Adding Nearest Genes
-#p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, y=mean1, group=1, color="Nearest genes"), linetype='solid', size=1)
-#p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='sky blue', width=0.2)
-#p
+p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, y=mean1, group=1, color="Nearest genes"), linetype='solid', size=1)
+p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='sky blue', width=0.2)
+p
 ### Adding Associated Genes
-#p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, y=mean1, group=1, color="Associated genes"), linetype='solid', size=1)
-#p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='orange', width=0.2)
-#p
+p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, y=mean1, group=1, color="Associated genes"), linetype='solid', size=1)
+p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='orange', width=0.2)
+p
 ### Adding Post Synaptic Genes (Human)
 #p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Post Synaptic Genes (Human)"), aes(x=stage, y=mean1, group=1, color="Post synaptic genes (human)"), linetype='solid', size=1)
 #p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Post Synaptic Genes (Human)"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='black', width=0.2)

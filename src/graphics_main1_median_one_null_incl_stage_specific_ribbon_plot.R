@@ -28,15 +28,19 @@ str(df.expression_matrix.clean.melt)
 ### marray
 #load("RData/null_RData_broad_marray_associated_priority.RData") #time_elapsed, list.par_analysis
 ### rnaseq
-load("RData/null_RData_broad_rnaseq_associated_priority.RData") #time_elapsed, list.par_analysis
+#load("RData/null_RData_broad_rnaseq_associated_priority.RData") #time_elapsed, list.par_analysis
 
 ############ ** PRIORITIZED genes ** ##########
-#load("????")
+### marray
+#load("RData/null_RData_broad_marray_prioritized_priority.RData") #time_elapsed, list.par_analysis
+### rnaseq
+load("RData/null_RData_broad_rnaseq_prioritized_priority.RData") #time_elapsed, list.par_analysis
+
 
 ############################# EXTRACT BROAD DATA #################################
 ############### Extracting from list
 list.null.mean.summary <- lapply(list.par_analysis, "[[", "df.null.mean.summary")
-list.null.median.summary <- lapply(list.par_analysis, "[[", "df.null.mean.summary")
+list.null.median.summary <- lapply(list.par_analysis, "[[", "df.null.median.summary")
 list.null.fits <- lapply(list.par_analysis, "[[", "list.null.fits")
 ### Generating data.frames - USING ldply!
 df.null.mapping <- ldply(list.par_analysis, "[[", "df.null.mapping") # the following worked when "scalar variables" were saved in the par.analyze_null_genes list: df.null.mapping <- ldply(list.par_analysis, function(x) {data.frame(x[["n_mapped_genes"]], x[["n_unmapped_genes"]])}) 
@@ -51,7 +55,12 @@ df.fit.stage<-ldply(seq_along(list.null.list.fit.stage), function(i) {ldply(list
 ############## Combining summary data frames
 df.null.mean.summary <- ldply(list.null.mean.summary) # COMBINING list of data frames
 df.null.median.summary <- ldply(list.null.median.summary) # COMBINING list of data frames
-
+df.null.median.summary.per_perm <- ddply(df.null.median.summary, .(permutation, stage), summarise,
+                                              mean_stage_across_structure = mean(mean, na.rm=TRUE),
+                                              sd_stage_across_structure   = sd(mean, na.rm=TRUE))
+df.null.median.summary.sem <- ddply(df.null.median.summary.per_perm, .(stage), summarise,
+                                         mean1 = mean(mean_stage_across_structure, na.rm=TRUE),
+                                         sd1   = sd(mean_stage_across_structure, na.rm=TRUE))
 
 ############################# READING GENE LISTs #################################
 path.datafiles <- '/Users/pascaltimshel/p_scz/brainspan/gene_lists'
@@ -145,10 +154,6 @@ p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Associated Genes"),
 p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='orange', width=0.2)
 p
 ### Adding NULL ASSOCIATED (median)
-#*OBS*: consider doing one more ddply around a c("stage", "permutation")
-df.null.median.summary.sem <- ddply(df.null.median.summary, c("stage"), summarise,
-                        mean1 = mean(mean, na.rm=TRUE),
-                        sd1   = sd(mean, na.rm=TRUE))
 #qplot(stage, mean1, group=permutation, data=df.null.median.summary.sem, geom="line")
 p <- p + geom_line(data=df.null.median.summary.sem, aes(x=stage, y=mean1, group=1, color="Associated genes (Null)"), linetype='solid', size=1)
 p <- p + geom_errorbar(data=df.null.median.summary.sem, aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='orange', width=0.2)

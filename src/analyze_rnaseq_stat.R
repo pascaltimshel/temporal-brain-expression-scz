@@ -113,10 +113,15 @@ ttest_stage <- function(df) {
   t.test(x, y, alternative="greater")$p.value # alternative = "greater" is the alternative that x has a larger mean than y.
   #t.test(x, y, alternative="greater") # alternative = "greater" is the alternative that x has a larger mean than y.
 }
+#### Making tests
 #df.ttest_stage.list <- dlply(df_rest, .(stage), ttest_stage)
 df.ttest_stage <- ddply(df_rest, .(stage), ttest_stage)
-df.ttest_stage[order(-df.ttest_stage[,2]),]
-df.ttest_stage[df.ttest_stage[,2] > 0.05/10,]
+
+#### Sorting by p-value
+df.ttest_stage.ordered <- df.ttest_stage[order(-df.ttest_stage[,2]),]
+df.ttest_stage.ordered
+#### Get stages that are NOT significant after BONFERRONI CORRECTION
+df.ttest_stage.ordered[df.ttest_stage.ordered[,2] > 0.05/10,]
 # stage         V1
 # 7     s6 0.21841097
 # 8     s7 0.02977490

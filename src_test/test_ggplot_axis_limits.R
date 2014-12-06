@@ -2,9 +2,32 @@
 ####### COOL commands #######
 #ggplot_build(<plot>)
 #
+attributes(p)
+p$coordinates #p$coordinates$limits
+attributes(p$scales)
+
+##################### BUILD ##############
+ggplot_build(p)
+str(ggplot_build(p))
+names(ggplot_build(p)) 
+#1) "data"--> a list of data frames (one for each layer)
+#2) "panel"-->panel object, which contain all information about axis limits, breaks etc.
+#3) "plot"--> builds plot
+?ggplot_build
+########### Useful for getting axis limits. Use in combination with coord_cartesian(ylim=c(0, 150))
+ggplot_build(p)$panel$ranges[[1]]$x.range
+ggplot_build(p)$panel$ranges[[1]]$y.range
+##########
 
 ## expand_limits(x = 0) --> include x=0 in the view of the plot
 ## scale_y_continuous(expand = c(0,1)) # multiplicative and additive constant used to expand the range of the scales 
+# ^^^ ----> DEFAULT: scale_y_continuous(expand = c(0.05, 0)) #c(0.05, 0)
+##^^^ ----> consider using 
+p.x.range <- ggplot_build(p)$panel$ranges[[1]]$x.range
+p.y.range <- ggplot_build(p)$panel$ranges[[1]]$y.range
+p <- p + coord_cartesian(xlim=p.x.range*1.05, ylim=p.y.range*1.05)
+
+
 ## scale_y_continuous(limits = c(0, NA)) # same as adding "+ ylim(c(0, NA))"
   # ---> this will EXCLUDE observations from the data set
 ## coord_cartesian(ylim=c(0, 150)) # HARD cut-off. 

@@ -36,8 +36,7 @@ df.columns$stage <- factor(df.columns$stage, levels(df.columns$stage)[match(orde
 df.rows <- read.csv(file.rows,h=T,row.names=1)
 
 ########### READ gene_length file ###########
-df.gene_length <- read.csv(file.gene_length,h=T)
-sum(is.na(df.gene_length$gene_length))
+###*** NO GENE LENGTH FILE
 
 ########### READ AND MANIPULATE expression file ###########
 ### ** THIS TAKES SOME TIME ** ###

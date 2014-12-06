@@ -1,0 +1,99 @@
+#### FILES
+/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/expression_matrix.csv
+/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/columns_metadata.csv
+/Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/rows_metadata.csv
+
+/Users/pascaltimshel/p_scz/brainspan/src/df.clean.gene_length.insync.csv
+/Users/pascaltimshel/p_scz/brainspan/src/schizophrenia_expression325permutations0to999.genes.combined.csv
+
+###### SCP commands
+### data
+scp /Users/pascaltimshel/p_scz/brainspan/data/141031/microarray/{expression_matrix,columns_metadata,rows_metadata}.csv ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/data/
+### data - src
+scp /Users/pascaltimshel/p_scz/brainspan/src/schizophrenia_expression325permutations0to999.genes.combined.csv ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/data/
+scp /Users/pascaltimshel/p_scz/brainspan/src/df.clean.gene_length.insync.csv ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/data/
+### prioritized genes
+scp /Users/pascaltimshel/p_scz/brainspan/data/schizophrenia_expression325permutations0to999.genes.prioritized.top_63.combined.csv ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/data/
+
+### src
+scp /Users/pascaltimshel/p_scz/brainspan/src/analyze_null_genes_parallel.R ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/analyze_null_genes_parallel.R
+
+
+###################################### COMMAND - OLD ######################################
+################## Rscript commands ##################
+
+ptimshel@node1377:/cvar/jhlab/timshel/scz> Rscript analyze_null_genes_parallel_broad.R | tee analyze_null_genes_parallel_broad.Rout
+
+################## Bsub commands ##################
+ptimshel@node1382:/cvar/jhlab/timshel/scz> bsub -o analyze_null_n12_priority.bsub.out -q priority -n 4 -R 'rusage[mem=16]' Rscript analyze_null_genes_parallel_broad.R
+	---> n=4 cores, workers=4, mem=16 works. Runtime = 13 min.
+	---> 16gb is not enough when running 12 cores
+	---> specifying "No memory" requirements is BAD.
+
+###################################### COMMANDS - RUN FOR ASSOCIATE GENES ######################################
+### Bsub - marray
+#bsub -J marray40GB_span1 -o generate_null_RData_n4_marray_priority.bsub.out -q priority -n 4 -R 'rusage[mem=40]' -R 'span[hosts=1]' Rscript generate_null_RData_parallel_broad.R
+	---> look at the -R 'span[hosts=1]' usage!!!!
+bsub -J marray40GB -o generate_null_RData_n4_marray_priority.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+
+### Bsub - rnaseq
+bsub -o generate_null_RData_n4_rnaseq_priority.bsub.out -q priority -n 4 -R 'rusage[mem=30]' Rscript generate_null_RData_parallel_broad.R
+bsub -J rnaseq_n2_50GB -o generate_null_RData_n2_50gb_rnaseq_priority.bsub.out -q priority -n 2 -R 'rusage[mem=50]' Rscript generate_null_RData_parallel_broad.R
+
+### ISH
+Rscript generate_null_RData_parallel_broad.R | tee generate_null_RData_parallel_broad.Rout
+
+###################################### COMMANDS - RUN FOR PRIORITIZED GENES | RUN ON GOLD! ######################################
+### Bsub - marray
+bsub -J marray40GB -o generate_null_RData_n4_40gb_marray_prioritized_genes_priority.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+
+### Bsub - rnaseq
+bsub -J rnaseq40GB -o generate_null_RData_n4_40gb_rnaseq_prioritized_genes_priority.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+
+###################################### COMMANDS - PAIRED TEST - 12/03/2014 ######################################
+
+################## Associated | COPPER ##################
+### Bsub - marray
+bsub -J marray_assoc_40GB -o generate_null_RData_n4_40gb_marray_associated_genes_priority_paired_ttest.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+### Bsub - marray
+bsub -J marray_prio_40GB -o generate_null_RData_n4_40gb_marray_prioritized_genes_priority_paired_ttest.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+
+################## RNAseq - queue=priority | COPPER ##################
+### Bsub - rnaseq - associated
+bsub -J rnaseq_assoc_40GB -o generate_null_RData_n4_40gb_rnaseq_associated_genes_priority_paired_ttest.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+### Bsub - rnaseq - prioritized
+bsub -J rnaseq_prio_40GB -o generate_null_RData_n4_40gb_rnaseq_prioritized_genes_priority_paired_ttest.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_null_RData_parallel_broad.R
+
+### RNAseq - ish test
+Rscript generate_null_RData_parallel_broad_paired_test_ISH.R | tee generate_null_RData_parallel_broad_paired_test_ISH_rnaseq.Rout
+
+
+
+
+################## Prioritized - queue=??? | GOLD ##################
+### Bsub - marray
+bsub -J marray_GWAS_40GB -o generate_null_RData_n4_40gb_marray_GWAS_genes_priority_paired_ttest.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_GWAScatalog_RData_parallel_broad_paired_test.R
+### Bsub - rnaseq
+bsub -J rnaseq_GWAS_40GB -o generate_null_RData_n4_40gb_rnaseq_GWAS_genes_priority_paired_ttest.bsub.out -q priority -n 4 -R 'rusage[mem=40]' Rscript generate_GWAScatalog_RData_parallel_broad_paired_test.R
+
+
+Rscript generate_GWAScatalog_RData_parallel_broad_paired_test.R | tee generate_GWAScatalog_RData_parallel_broad_paired_test.Rout
+Rscript generate_GWAScatalog_RData_parallel_broad_paired_test.R | tee generate_GWAScatalog_RData_parallel_broad_paired_test_marray.Rout
+
+
+
+###################################### BROAD --> OSX ######################################
+
+################## Transfer RData ##################
+scp ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/analyze_null_genes_Broad_associated_priority.RData /Users/pascaltimshel/p_scz/brainspan/src/
+
+################## Transfer RData - prioritized files ##################
+scp ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/null_RData_broad_rnaseq_prioritized_priority.RData /Users/pascaltimshel/p_scz/brainspan/src/RData/
+scp ptimshel@cu.broadinstitute.org:/cvar/jhlab/timshel/scz/null_RData_broad_marray_prioritized_priority.RData /Users/pascaltimshel/p_scz/brainspan/src/RData/
+
+
+
+################## Transfer gene prioritation files - TP --> OSX ##################
+scp ptimshel@cu.broadinstitute.org:/cvar/jhlab/tp/scz/data/schizophrenia_expression_geneprio/*.txt /Users/pascaltimshel/p_scz/brainspan/schizophrenia_expression_geneprio/
+
+
