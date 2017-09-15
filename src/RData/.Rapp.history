@@ -1,0 +1,2 @@
+load("/Users/pascaltimshel/p_scz/brainspan/src/RData/fit_stage_obs_marray_associated.RData")
+load("/Users/pascaltimshel/p_scz/brainspan/src/RData/data_rnaseq_expression_processed_full_res.RData")
